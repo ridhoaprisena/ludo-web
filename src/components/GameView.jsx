@@ -79,7 +79,7 @@ export default function GameView({
     let botNum = 2;
     PLAYER_COLORS.forEach((col) => {
       if (col === humanColor) {
-        list[col] = { name: 'Pemain 1' };
+        list[col] = { name: 'Anda' };
       } else {
         list[col] = { name: `Bot ${botNum}` };
         botNum++;

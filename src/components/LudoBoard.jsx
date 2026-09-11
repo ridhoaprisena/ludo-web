@@ -272,7 +272,8 @@ export default function LudoBoard({
             const isGreenStart = idx === 13;
             const isYellowStart = idx === 26;
             const isBlueStart = idx === 39;
-            const isSafeStar = SAFE_TRACK_INDICES.includes(idx);
+            const isStartCell = isRedStart || isGreenStart || isYellowStart || isBlueStart;
+            const isSafeStar = SAFE_TRACK_INDICES.includes(idx) && !isStartCell;
 
             let cellBg = isLight ? '#FFFFFF' : '#2B2930';
             if (isRedStart) cellBg = 'url(#grad-red)';
@@ -296,38 +297,6 @@ export default function LudoBoard({
                   strokeWidth="2"
                 />
                 {isSafeStar && renderStar(cx, cy, 26, '#FFD54F')}
-                {isRedStart && (
-                  <path
-                    d={`M ${cx - 24} ${cy} L ${cx} ${cy - 20} L ${cx} ${cy - 8} L ${cx + 24} ${cy - 8} L ${cx + 24} ${cy + 8} L ${cx} ${cy + 8} L ${cx} ${cy + 20} Z`}
-                    fill="#FFF"
-                    transform={`rotate(90 ${cx} ${cy})`}
-                    opacity="0.9"
-                  />
-                )}
-                {isGreenStart && (
-                  <path
-                    d={`M ${cx - 24} ${cy} L ${cx} ${cy - 20} L ${cx} ${cy - 8} L ${cx + 24} ${cy - 8} L ${cx + 24} ${cy + 8} L ${cx} ${cy + 8} L ${cx} ${cy + 20} Z`}
-                    fill="#FFF"
-                    transform={`rotate(180 ${cx} ${cy})`}
-                    opacity="0.9"
-                  />
-                )}
-                {isYellowStart && (
-                  <path
-                    d={`M ${cx - 24} ${cy} L ${cx} ${cy - 20} L ${cx} ${cy - 8} L ${cx + 24} ${cy - 8} L ${cx + 24} ${cy + 8} L ${cx} ${cy + 8} L ${cx} ${cy + 20} Z`}
-                    fill="#FFF"
-                    transform={`rotate(270 ${cx} ${cy})`}
-                    opacity="0.9"
-                  />
-                )}
-                {isBlueStart && (
-                  <path
-                    d={`M ${cx - 24} ${cy} L ${cx} ${cy - 20} L ${cx} ${cy - 8} L ${cx + 24} ${cy - 8} L ${cx + 24} ${cy + 8} L ${cx} ${cy + 8} L ${cx} ${cy + 20} Z`}
-                    fill="#FFF"
-                    transform={`rotate(0 ${cx} ${cy})`}
-                    opacity="0.9"
-                  />
-                )}
               </g>
             );
           })}
