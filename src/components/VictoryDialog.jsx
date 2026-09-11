@@ -3,7 +3,7 @@ import { COLOR_DATA } from '../game/ludoEngine';
 import { sound } from '../utils/audio';
 import { fireConfetti } from '../utils/confetti';
 
-export default function VictoryDialog({ winnerColor, isHumanWinner, onPlayAgain, onExitToMenu }) {
+export default function VictoryDialog({ winnerColor, winnerName, isHumanWinner, onPlayAgain, onExitToMenu }) {
   const canvasRef = useRef(null);
   const winnerMeta = COLOR_DATA[winnerColor] || COLOR_DATA.red;
 
@@ -33,9 +33,9 @@ export default function VictoryDialog({ winnerColor, isHumanWinner, onPlayAgain,
 
         <p className="victory-subtitle">
           {isHumanWinner ? (
-            <span>Selamat! Anda berhasil mengantarkan seluruh bidak ke Home!</span>
+            <span>Selamat! Player 1 berhasil mengantarkan seluruh bidak ke Home!</span>
           ) : (
-            <span>Bot {winnerMeta.name} menjadi yang tercepat menyelesaikan permainan!</span>
+            <span>{winnerName || 'Bot'} menjadi yang tercepat menyelesaikan permainan!</span>
           )}
         </p>
 
@@ -51,7 +51,7 @@ export default function VictoryDialog({ winnerColor, isHumanWinner, onPlayAgain,
             style={{ backgroundColor: winnerMeta.hex }}
           />
           <span className="winner-label">
-            Juara 1: {isHumanWinner ? 'Pemain Utama' : `Bot ${winnerMeta.name}`}
+            Juara 1: {winnerName || (isHumanWinner ? 'Player 1' : 'Bot')}
           </span>
         </div>
 

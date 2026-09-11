@@ -76,7 +76,7 @@ export default function MainMenu({
                     )}
                   </div>
                   <span className="color-choice-name">{meta.name}</span>
-                  <span className="color-choice-role">{isSelected ? 'Anda' : 'Bot AI'}</span>
+                  <span className="color-choice-role">{isSelected ? 'Pemain' : 'Bot'}</span>
                 </button>
               );
             })}

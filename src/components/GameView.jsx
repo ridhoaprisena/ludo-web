@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useCallback, useMemo } from 'react';
 import {
   PLAYER_COLORS,
   TOTAL_STEPS_TO_HOME,
@@ -74,12 +74,19 @@ export default function GameView({
     };
   }, []);
 
-  const players = {
-    red: { name: humanColor === 'red' ? 'Anda (Merah)' : 'Bot Merah' },
-    green: { name: humanColor === 'green' ? 'Anda (Hijau)' : 'Bot Hijau' },
-    yellow: { name: humanColor === 'yellow' ? 'Anda (Kuning)' : 'Bot Kuning' },
-    blue: { name: humanColor === 'blue' ? 'Anda (Biru)' : 'Bot Biru' },
-  };
+  const players = useMemo(() => {
+    const list = {};
+    let botNum = 2;
+    PLAYER_COLORS.forEach((col) => {
+      if (col === humanColor) {
+        list[col] = { name: 'Pemain 1' };
+      } else {
+        list[col] = { name: `Bot ${botNum}` };
+        botNum++;
+      }
+    });
+    return list;
+  }, [humanColor]);
 
   const checkVictory = (currentTokens, color) => {
     const allHome = currentTokens[color].every((s) => s === TOTAL_STEPS_TO_HOME);
@@ -169,8 +176,8 @@ export default function GameView({
               const bonusMsg = gotCaptureBonus
                 ? 'Menangkap lawan! Bonus lemparan!'
                 : gotHomeBonus
-                ? 'Tiba di Home! Bonus lemparan!'
-                : 'Dadu 6! Bonus lemparan!';
+                  ? 'Tiba di Home! Bonus lemparan!'
+                  : 'Dadu 6! Bonus lemparan!';
               setTurnMessage(bonusMsg);
               setTurnState('rolling');
               setDiceValue(null);
@@ -314,6 +321,7 @@ export default function GameView({
     <div className="game-view-container">
       <TopBar
         activeColor={activeColor}
+        activePlayerName={players[activeColor]?.name}
         isHumanTurn={isHumanTurn}
         turnState={turnState}
         turnMessage={turnMessage}
@@ -420,6 +428,7 @@ export default function GameView({
       {winner && (
         <VictoryDialog
           winnerColor={winner}
+          winnerName={players[winner]?.name}
           isHumanWinner={winner === humanColor}
           onPlayAgain={handleRestart}
           onExitToMenu={onExitToMenu}

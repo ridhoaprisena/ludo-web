@@ -4,9 +4,7 @@ import { sound } from '../utils/audio';
 
 export default function TopBar({
   activeColor,
-  isHumanTurn,
-  turnState,
-  turnMessage,
+  activePlayerName,
   soundEnabled,
   onToggleSound,
   onOpenRules,
@@ -37,11 +35,7 @@ export default function TopBar({
             style={{ backgroundColor: activeMeta.hex }}
           />
           <span className="turn-status-text">
-            {turnMessage || (isHumanTurn
-              ? turnState === 'rolling'
-                ? 'Giliran Anda: Lempar Dadu!'
-                : 'Pilih Bidak untuk Bergerak'
-              : `Giliran Bot ${activeMeta.name}...`)}
+            {activePlayerName}
           </span>
         </div>
       </div>
